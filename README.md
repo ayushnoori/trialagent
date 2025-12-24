@@ -158,3 +158,15 @@ Install dependencies using uv:
 ```bash
 uv sync
 ```
+
+**Important:** Qwen3-8B requires `transformers>=4.51.0`. If you encounter an "Unrecognized model" error, ensure you have the latest version:
+
+```bash
+uv sync --upgrade
+```
+
+Or explicitly upgrade transformers:
+
+```bash
+uv pip install --upgrade transformers>=4.51.0
+```

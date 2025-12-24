@@ -49,15 +49,20 @@ class ClinicalSupervisorAgent:
         
         console.print(f"[bold blue]Loading Qwen model: {self.model_name}[/bold blue]")
         
+        # Get token if available
+        hf_token = os.getenv("HF_TOKEN")
+        
         console.print("[dim]Loading tokenizer...[/dim]")
         self.tokenizer = AutoTokenizer.from_pretrained(
             self.model_name,
+            token=hf_token,
             trust_remote_code=True,
         )
         
         console.print("[dim]Loading model...[/dim]")
         self.model = AutoModelForCausalLM.from_pretrained(
             self.model_name,
+            token=hf_token,
             torch_dtype="auto",
             device_map=None,
             trust_remote_code=True,
