@@ -53,47 +53,6 @@ This module is composed of the following agents:
 
 To configure Hugging Face Hub to work with JFrog Artifactory, you need to set the following environment variables:
 
-**Using uv (Recommended):**
-
-**Option 1: Use the helper script (easiest)**
-
-On Unix/macOS:
-```bash
-./run_with_hf.sh test-supervisor
-```
-
-On Windows:
-```cmd
-run_with_hf.bat test-supervisor
-```
-
-The script will automatically create a `.env` file if it doesn't exist.
-
-**Option 2: Create .env file manually**
-
-Create a `.env` file in the project root with:
-
-```bash
-HF_HUB_ETAG_TIMEOUT=86400
-HF_HUB_DOWNLOAD_TIMEOUT=86400
-HF_ENDPOINT=https://jfrog.apps.ocpdmzp.wclalit.org.il/artifactory/api/huggingfaceml/huggingface
-HF_TOKEN=cmVmdGtu0jAx0jE3OTgwMTIxNDY6Q11zTXp4RHAYRXI2b3Z6bn1WMWRBSUthSnNp
-```
-
-Then run commands with:
-
-```bash
-uv run --env-file .env test-supervisor
-```
-
-**Option 3: Inline environment variables**
-
-```bash
-uv run --env HF_ENDPOINT=https://jfrog.apps.ocpdmzp.wclalit.org.il/artifactory/api/huggingfaceml/huggingface --env HF_TOKEN=cmVmdGtu0jAx0jE3OTgwMTIxNDY6Q11zTXp4RHAYRXI2b3Z6bn1WMWRBSUthSnNp test-supervisor
-```
-
-**Manual setup (alternative methods):**
-
 **On Unix/Linux/macOS (bash/zsh):**
 
 ```bash
@@ -106,47 +65,15 @@ export HF_TOKEN=<your-token>
 For convenience, you can source the provided setup script:
 
 ```bash
-source setup_hf.sh
+source setup_hf_jfrog.sh
 ```
 
 **On Windows (Command Prompt):**
 
-Run the batch file using `call` to set variables in the current shell:
+Run the batch file:
 
 ```cmd
-call setup_hf.bat
-```
-
-Or set the variables directly in your current shell:
-
-```cmd
-set HF_HUB_ETAG_TIMEOUT=86400
-set HF_HUB_DOWNLOAD_TIMEOUT=86400
-set HF_ENDPOINT=https://jfrog.apps.ocpdmzp.wclalit.org.il/artifactory/api/huggingfaceml/huggingface
-set HF_TOKEN=cmVmdGtu0jAx0jE3OTgwMTIxNDY6Q11zTXp4RHAYRXI2b3Z6bn1WMWRBSUthSnNp
-```
-
-**On Windows (PowerShell):**
-
-**Option 1: Set variables directly (Recommended - avoids execution policy issues):**
-
-```powershell
-$env:HF_HUB_ETAG_TIMEOUT = "86400"
-$env:HF_HUB_DOWNLOAD_TIMEOUT = "86400"
-$env:HF_ENDPOINT = "https://jfrog.apps.ocpdmzp.wclalit.org.il/artifactory/api/huggingfaceml/huggingface"
-$env:HF_TOKEN = "cmVmdGtu0jAx0jE3OTgwMTIxNDY6Q11zTXp4RHAYRXI2b3Z6bn1WMWRBSUthSnNp"
-```
-
-**Option 2: Bypass execution policy for this script:**
-
-```powershell
-powershell -ExecutionPolicy Bypass -File .\setup_hf.ps1
-```
-
-**Option 3: Use the batch file from PowerShell:**
-
-```powershell
-cmd /c "call setup_hf.bat"
+setup_hf_jfrog.bat
 ```
 
 **Note:** For Hugging Face client version 0.19.0 and above, the `HF_HUB_ETAG_TIMEOUT` parameter allows you to resolve models using pipelines and tokenizers.
@@ -157,16 +84,4 @@ Install dependencies using uv:
 
 ```bash
 uv sync
-```
-
-**Important:** Qwen3-8B requires `transformers>=4.51.0`. If you encounter an "Unrecognized model" error, ensure you have the latest version:
-
-```bash
-uv sync --upgrade
-```
-
-Or explicitly upgrade transformers:
-
-```bash
-uv pip install --upgrade transformers>=4.51.0
 ```
